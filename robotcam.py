@@ -44,17 +44,17 @@ while(True):
         if tx2 != 0:
             h = ourindex3(tx0,tx1,tx2)
             if determineleft(h) == True:
-                avgpoint =  float[(table.getNumber(("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2),
-                (table.getNumber(("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2)]
+                avgpoint =  [(table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2,
+            (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2]
             if determineleft(h) == False:
-                avgpoint =  float[(table.getNumber(("tx" + str(h[2]),None) + table.getNumber("tx" + str(h[1]),None)) / 2),
-                (table.getNumber(("ty" + str(h[2]),None) + table.getNumber("ty" + str(h[1]),None)) / 2)]
+                avgpoint =  [(table.getNumber("tx" + str(h[2]),None) + table.getNumber("tx" + str(h[1]),None)) / 2,
+            (table.getNumber("ty" + str(h[2]),None) + table.getNumber("ty" + str(h[1]),None)) / 2]
             print(avgpoint)
         
         if tx2 == 0: 
             h = ourindex2(tx0,tx1)
-            avgpoint =  float[(table.getNumber(("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2),
-            (table.getNumber(("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2)]
+            avgpoint =  [(table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2,
+            (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2]
             print(avgpoint)
 
 
