@@ -41,7 +41,7 @@ while(True):
     tx1 = table.getNumber('tx1',None) 
     tx2 = table.getNumber('tx2',None)
 
-    if ((tx0 != 0) and (tx1 != 0)):
+    if ((tx0 != None) and (tx1 != None)):
         if tx2 != 0:
             h = ourindex3(tx0,tx1,tx2)
             if determineleft(h) == True:
