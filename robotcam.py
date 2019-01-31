@@ -13,7 +13,6 @@ def ourindex3(tx0, tx1, tx2):
     arr = [tx0, tx1, tx2]
     arr.sort()
     indices = [orig.index(arr[0]), orig.index(arr[1]),orig.index(arr[2])]
-    leftmost = table.getNumber('tx' + str(indices[0]),None)
     return indices
 
 def ourindex2(tx0, tx1):
@@ -21,7 +20,6 @@ def ourindex2(tx0, tx1):
     arr = [tx0, tx1]
     arr.sort()
     indices = [orig.index(arr[0]), orig.index(arr[1])]
-    leftmost = table.getNumber('tx' + str(indices[0]),None)
     return indices
 
 def determineleft(h):
@@ -57,22 +55,23 @@ while(True):
                 y_coord = 240 - float(mid_y * (y + 1))
 
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
-            cv2.line(frame, (int(x_coord)+5, int(y_coord)), (int(x_coord)-5, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
-            cv2.line(frame, (int(x_coord), int(y_coord)+5), (int(x_coord), int(y_coord)-5), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord)+10, int(y_coord)), (int(x_coord)-10, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord), int(y_coord)+10), (int(x_coord), int(y_coord)-10), (0, 255, 0), thickness=3, lineType=8)
 
-        if tx2 == 0: 
+        elif tx2 == 0: 
             h = ourindex2(tx0,tx1)                                                                                                                                                                                                                                              
             x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
             y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
             x_coord = float(mid_x * (x + 1))
             y_coord = 240 - float(mid_y * (y + 1))
-            cv2.line(frame, (int(x_coord)+5, int(y_coord)), (int(x_coord)-5, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
-            cv2.line(frame, (int(x_coord), int(y_coord)+5), (int(x_coord), int(y_coord)-5), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord)+10, int(y_coord)), (int(x_coord)-10, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord), int(y_coord)+10), (int(x_coord), int(y_coord)-10), (0, 255, 0), thickness=3, lineType=8)
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
 
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
+    cv2.imwrite("image.jpg", frame)
     if cv2.waitKey(1)& 0xFF == ord('q'):
         break
 
