@@ -57,15 +57,17 @@ while(True):
                 y_coord = 240 - float(mid_y * (y + 1))
 
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
-            cv2.line(frame, (x_coord+1, y_coord+1), (x_coord-1, y1-1), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord)+5, int(y_coord)), (int(x_coord)-5, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord), int(y_coord)+5), (int(x_coord), int(y_coord)-5), (0, 255, 0), thickness=3, lineType=8)
 
         if tx2 == 0: 
-            h = ourindex2(tx0,tx1)
+            h = ourindex2(tx0,tx1)                                                                                                                                                                                                                                              
             x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
             y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
             x_coord = float(mid_x * (x + 1))
             y_coord = 240 - float(mid_y * (y + 1))
-            cv2.line(frame, (x_coord+1, y_coord+1), (x_coord-1, y1-1), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord)+5, int(y_coord)), (int(x_coord)-5, int(y_coord)), (0, 255, 0), thickness=3, lineType=8)
+            cv2.line(frame, (int(x_coord), int(y_coord)+5), (int(x_coord), int(y_coord)-5), (0, 255, 0), thickness=3, lineType=8)
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
 
 
