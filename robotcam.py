@@ -41,8 +41,7 @@ while(True):
     tx1 = table.getNumber('tx1',None) 
     tx2 = table.getNumber('tx2',None)
 
-    if (tx0 and tx1):
-        
+    if ((tx0 != 0) and (tx1 != 0)):
         if tx2 != 0:
             h = ourindex3(tx0,tx1,tx2)
             if determineleft(h) == True:
@@ -58,13 +57,15 @@ while(True):
                 y_coord = float(mid_y * (y + 1))
 
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
-        
+            cv2.line(frame, (x_coord+1, y_coord+1), (x_coord-1, y1-1), (0, 255, 0), thickness=3, lineType=8)
+            
         if tx2 == 0: 
             h = ourindex2(tx0,tx1)
             x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
             y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
             x_coord = float(mid_x * (x + 1))
             y_coord = float(mid_y * (y + 1))
+            cv2.line(frame, (x_coord+1, y_coord+1), (x_coord-1, y1-1), (0, 255, 0), thickness=3, lineType=8)
             print("X:" + str(x_coord) +  " Y:" + str(y_coord))
 
 
@@ -76,4 +77,3 @@ while(True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
-
