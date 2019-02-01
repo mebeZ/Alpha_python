@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 from networktables import NetworkTables
 import socket
-from client import Client
 
 cap = cv2.VideoCapture("http://10.11.55.11:5800/video")
 mid_x = 160
