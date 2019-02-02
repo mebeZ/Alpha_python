@@ -33,7 +33,6 @@ while(True):
     ret, frame = cap.read()
     NetworkTables.initialize(server="10.11.55.2")
     table = NetworkTables.getTable("limelight")
-    LeftMost = []
     tx0 = table.getNumber('tx0',None) 
     tx1 = table.getNumber('tx1',None) 
     tx2 = table.getNumber('tx2',None)
