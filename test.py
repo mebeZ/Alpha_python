@@ -16,4 +16,4 @@ print ('Connected by', addr)
 while True:
     #data = conn.recv(1024)
     #if not data: break
-    conn.sendall(frame)
+    conn.sendall(frame.tobytes())
