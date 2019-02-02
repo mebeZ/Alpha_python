@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response
 import cv2
-
+from LimelightCam import LimelightCam
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,17 +9,10 @@ def index():
 
 def gen():
     while True:
-        with open("image.jpg", "rb") as f:
-            check_chars = f.read()[-2:]
-        if check_chars != b'\xff\xd9':
-            print("Corrupted image ok")
-        else:
-            img = cv2.imread("image.jpg", cv2.IMREAD_COLOR)
-            if (img is not None):
-                result, epic = cv2.imencode('.jpg', img, [int(cv2.IMWRITE_JPEG_QUALITY),90])
-                frame = epic.tobytes()
-                yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
+        camera = LimelightCam()
+        frame = camera.getMarkedImage()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
 
 @app.route('/video_feed')
 def video_feed():

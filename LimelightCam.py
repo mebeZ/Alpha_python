@@ -4,7 +4,6 @@ from networktables import NetworkTables
 
 class LimelightCam():
     def __init__(self): #connects to limelight server
-        print("Camera initiated")
         self.cap = cv2.VideoCapture("http://10.11.55.11:5800/video")
         self.mid_x = 160 # x screen resolution / 2
         self.mid_y = 120 # y screen resolution / 2
@@ -53,7 +52,8 @@ class LimelightCam():
                 cv2.line(frame, (int(x_coord)+15, int(y_coord)), (int(x_coord)-15, int(y_coord)), (255, 0, 0), thickness=3, lineType=8) # cross
                 cv2.line(frame, (int(x_coord), int(y_coord)+15), (int(x_coord), int(y_coord)-15), (255, 0, 0), thickness=3, lineType=8)
                 #cv2.imshow("frame", frame)
-                return frame
+                ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
+                return epic.tobytes()
 
             elif tx2 == 0: 
                 h = self.ourindex2(tx0,tx1)                                                                                                                                                                                                                                              
@@ -64,7 +64,9 @@ class LimelightCam():
                 cv2.line(frame, (int(x_coord)+15, int(y_coord)), (int(x_coord)-15, int(y_coord)), (255, 0, 0), thickness=3, lineType=8)
                 cv2.line(frame, (int(x_coord), int(y_coord)+15), (int(x_coord), int(y_coord)-15), (255, 0, 0), thickness=3, lineType=8)
              #   cv2.imshow("frame", frame)
-                return frame
+                ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
+                return epic.tobytes()
         else:
             #cv2.imshow("frame", frame)
-            return frame
+            ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
+            return epic.tobytes()
