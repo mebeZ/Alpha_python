@@ -10,7 +10,7 @@ def index():
 def gen():
     camera = LimelightCam()
     while True:
-        frame = camera.getMarkedImage()
+        frame = camera.getFrames()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
 
