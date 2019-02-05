@@ -8,8 +8,8 @@ def index():
     return "ok boss"
 
 def gen():
+    camera = LimelightCam()
     while True:
-        camera = LimelightCam()
         frame = camera.getMarkedImage()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
@@ -20,4 +20,4 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port="5802", debug=True)
+    app.run(host='0.0.0.0', port=5802, debug=True)

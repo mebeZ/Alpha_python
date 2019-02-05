@@ -4,7 +4,7 @@ from networktables import NetworkTables
 
 class LimelightCam():
     def __init__(self): #connects to limelight server
-        self.cap = cv2.VideoCapture("http://10.11.55.11:5800/video")
+        self.cap = cv2.VideoCapture("http://limelight.local:5800/video")
         self.mid_x = 160 # x screen resolution / 2
         self.mid_y = 120 # y screen resolution / 2
 
