@@ -58,11 +58,11 @@ class LimelightCam():
                 return x_coord, y_coord
 
             elif tx2 == 0:
-                if ((self.determineleft(table, h[1])) and (self.determineleft(table, h[0]) == False)):
+                h = self.ourindex2(tx0,tx1)    
+                if (self.determineleft(table, h[1])):
                     table.putBoolean("sawHatch",True)
                 else:
-                    table.putBoolean("sawHatch",False)
-                h = self.ourindex2(tx0,tx1)                                                                                                                                                                                                                                              
+                    table.putBoolean("sawHatch",False)                                                                                                                                                                                                                                          
                 x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
                 y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
                 x_coord = float(self.mid_x * (x + 1))
@@ -73,7 +73,7 @@ class LimelightCam():
             return 0,0
     
     def getFrames(self):
-        NetworkTables.initialize(server="10.11.55.2") # gets contours
+        NetworkTables.initialize(server="10.11.55.2") 
         table = NetworkTables.getTable("limelight")
         x_coord, y_coord = self.getCrosshairs()
         table.putNumber("camMode",1)
@@ -82,4 +82,9 @@ class LimelightCam():
         cv2.line(frame, (int(x_coord), int(y_coord)+15), (int(x_coord), int(y_coord)-15), (255, 0, 0), thickness=3, lineType=8)
         ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
         return epic.tobytes()
+
+    def checkForHatch(self):
+        NetworkTables.initialize(server="10.11.55.2") 
+        table = NetworkTables.getTable("limelight")
+        return table.getBoolean("sawHatch", False)
     
