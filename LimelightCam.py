@@ -9,7 +9,7 @@ class LimelightCam():
         self.mid_y = 120 # y screen resolution / 2
 
     def determineleft(self, table, h): # Determines skew of contour
-        if table.getNumber("ts" + str(h[1]),None) > -45:
+        if table.getNumber("ts" + str(h),None) > -45:
             return (True)
         else:
             return False
@@ -36,23 +36,32 @@ class LimelightCam():
         tx0 = table.getNumber('tx0',None) 
         tx1 = table.getNumber('tx1',None) 
         tx2 = table.getNumber('tx2',None)
+        
         if ((tx0 != None) and (tx1 != None)):
+            
             if tx2 != 0:
                 h = self.ourindex3(tx0,tx1,tx2) # Sorting
-                if self.determineleft(table, h) == True:
+                if (((self.determineleft(table, h[1])) and (self.determineleft(table, h[0]) == False)) or ((self.determineleft(table, h[1]) == False) and (self.determineleft(table, h[2])))):
+                    table.putBoolean("sawHatch",True)
+                else:
+                    table.putBoolean("sawHatch",False)
+                if self.determineleft(table, h[1]) == True:
                     x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
                     y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2 # Averages x and y values together
-
                     x_coord = float(self.mid_x * (x + 1))
                     y_coord = 240 - float(self.mid_y * (y + 1)) # converts offset into tangible coordinates
-                if self.determineleft(table, h) == False:
+                if self.determineleft(table, h[1]) == False:
                     x = (table.getNumber("tx" + str(h[2]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
                     y = (table.getNumber("ty" + str(h[2]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
                     x_coord = float(self.mid_x * (x + 1))
                     y_coord = 240 - float(self.mid_y * (y + 1))
                 return x_coord, y_coord
 
-            elif tx2 == 0: 
+            elif tx2 == 0:
+                if ((self.determineleft(table, h[1])) and (self.determineleft(table, h[0]) == False)):
+                    table.putBoolean("sawHatch",True)
+                else:
+                    table.putBoolean("sawHatch",False)
                 h = self.ourindex2(tx0,tx1)                                                                                                                                                                                                                                              
                 x = (table.getNumber("tx" + str(h[0]),None) + table.getNumber("tx" + str(h[1]),None)) / 2
                 y = (table.getNumber("ty" + str(h[0]),None) + table.getNumber("ty" + str(h[1]),None)) / 2
@@ -73,4 +82,4 @@ class LimelightCam():
         cv2.line(frame, (int(x_coord), int(y_coord)+15), (int(x_coord), int(y_coord)-15), (255, 0, 0), thickness=3, lineType=8)
         ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
         return epic.tobytes()
-
+    
