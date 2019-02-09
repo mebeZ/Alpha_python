@@ -8,6 +8,12 @@ def index():
     return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/stream.mjpg')
+def stream():
+    return Response(gen(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 def gen():
     camera = LimelightCam()
     while True:
