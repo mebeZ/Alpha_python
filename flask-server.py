@@ -16,11 +16,10 @@ def stream():
 
 def gen():
     camera = LimelightCam()
-    while True:
-        frame = camera.getFrames()
-        print(camera.checkForHatch())
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
+    frame = camera.getFrames()
+    print(camera.checkForHatch())
+    yield (b'--frame\r\n'
+           b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5802, debug=True)

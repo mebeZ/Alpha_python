@@ -4,7 +4,7 @@ from networktables import NetworkTables
 
 class LimelightCam():
     def __init__(self): #connects to limelight server
-        self.cap = cv2.VideoCapture("http://limelight.local:5800/video")
+        self.cap = cv2.VideoCapture("http://10.11.55.11:5800/video")
         self.mid_x = 160 # x screen resolution / 2
         self.mid_y = 120 # y screen resolution / 2
 
@@ -31,7 +31,6 @@ class LimelightCam():
     def getCrosshairs(self): 
         NetworkTables.initialize(server="10.11.55.2") # gets contours
         table = NetworkTables.getTable("limelight")
-        table.putNumber("camMode",0)
         ret, frame = self.cap.read()
         tx0 = table.getNumber('tx0',None) 
         tx1 = table.getNumber('tx1',None) 
@@ -75,9 +74,10 @@ class LimelightCam():
     def getFrames(self):
         NetworkTables.initialize(server="10.11.55.2") 
         table = NetworkTables.getTable("limelight")
+        table.putNumber("camMode",0)
         x_coord, y_coord = self.getCrosshairs()
-        table.putNumber("camMode",1)
         ret, frame = self.cap.read()
+        table.putNumber("camMode",1)
         cv2.line(frame, (int(x_coord)+15, int(y_coord)), (int(x_coord)-15, int(y_coord)), (255, 0, 0), thickness=3, lineType=8)
         cv2.line(frame, (int(x_coord), int(y_coord)+15), (int(x_coord), int(y_coord)-15), (255, 0, 0), thickness=3, lineType=8)
         ret, epic = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY),90])
