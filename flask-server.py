@@ -15,10 +15,10 @@ def stream():
 
 
 def gen():
-    camera = LimelightCam()
-    frame = camera.getFrames()
-    print(camera.checkForHatch())
-    yield (b'--frame\r\n'
+    while(True):
+        camera = LimelightCam()
+        frame = camera.getFrames()
+        yield (b'--frame\r\n'
            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'll\r\n')
 
 if __name__ == '__main__':
