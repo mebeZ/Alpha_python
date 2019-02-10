@@ -8,6 +8,7 @@ class LimelightCam():
         self.cap   = cv2.VideoCapture("http://10.11.55.11:5800/video")
         self.mid_x = 160 # x screen resolution / 2
         self.mid_y = 120 # y screen resolution / 2
+        self.res_x = 640 # Full x screen resolution including usb cam
 
     def determineLeft(self, table, h): 
         return table.getNumber("ts" + str(h),None) > -45
@@ -40,14 +41,16 @@ class LimelightCam():
     
     def getCrosshairs(self): 
         table = NetworkTables.getTable("limelight")
-        ret, frame = self.cap.read()
         tx0 = table.getNumber('tx0',None) 
         tx1 = table.getNumber('tx1',None) 
         tx2 = table.getNumber('tx2',None)
 
         if (tx0 and tx1):
-            listOfContours = [tx0, tx1, tx2]
-
+            if(tx2):
+                listOfContours = [tx0, tx1, tx2]
+            else:
+                listOfContours = [tx0, tx1]
+                
             sortedContours = self.sortIndices(listOfContours)
             
             midContDirection   = self.determineLeft(table, sortedContours[1])
@@ -74,14 +77,19 @@ class LimelightCam():
     def encodeJPEG(self, image):
         ret, epic = cv2.imencode('.jpg', image, [int(cv2.IMWRITE_JPEG_QUALITY),90])
         return epic
+
+    def getUSBImage(self):
+        ret, frame = self.cap.read()
+        return frame[0:240, 320:640]
+        
     
     def getFrames(self):
         table = NetworkTables.getTable("limelight")
         x_val, y_val = self.getCrosshairs()
-        ret, frame   = self.cap.read()
+        frame   = self.getUSBImage()
         self.drawCross(frame, x_val, y_val, 15)
-        epic = self.encodeJPEG(frame)
-        return epic.tobytes()
+        jpegBytes = self.encodeJPEG(frame)
+        return jpegBytes.tobytes()
     
     def checkForHatch(self):
         table = NetworkTables.getTable("limelight")
