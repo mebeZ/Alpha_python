@@ -46,10 +46,7 @@ class LimelightCam():
         tx2 = table.getNumber('tx2',None)
 
         if (tx0 and tx1):
-            if(tx2):
-                listOfContours = [tx0, tx1, tx2]
-            else:
-                listOfContours = [tx0, tx1]
+            listOfContours = [tx0, tx1, tx2]
 
             sortedContours = self.sortIndices(listOfContours)
             
