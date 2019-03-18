@@ -78,16 +78,12 @@ class LimelightCam():
         ret, epic = cv2.imencode('.jpg', image, [int(cv2.IMWRITE_JPEG_QUALITY),90])
         return epic
 
-    def getUSBImage(self):
-        ret, frame = self.cap.read()
-        return frame[0:240, 320:640]
-        
-    
     def getFrames(self):
         table = NetworkTables.getTable("limelight")
         x_val, y_val = self.getCrosshairs()
-        frame   = self.getUSBImage()
+        ret, frame = self.cap.read()
         self.drawCross(frame, x_val, y_val, 15)
+        cv2.line(frame,(self.mid_x,0), (self.mid_x, 240), (0,255,0), 2)
         jpegBytes = self.encodeJPEG(frame)
         return jpegBytes.tobytes()
     
